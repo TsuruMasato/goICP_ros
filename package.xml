@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <package format="2">
   <name>goICP-ros</name>
-  <version>0.0.0</version>
+  <version>0.0.1</version>
   <description>The goICP-ros package</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag -->
   <!-- Example:  -->
   <!-- <maintainer email="jane.doe@example.com">Jane Doe</maintainer> -->
-  <maintainer email="masato@todo.todo">masato</maintainer>
+  <maintainer email="tsuru@hlab.sys.es.osaka-u.ac.jp">masato</maintainer>
 
 
   <!-- One license tag required, multiple allowed, one license per tag -->
@@ -49,7 +49,27 @@
   <!-- Use doc_depend for packages you need only for building documentation: -->
   <!--   <doc_depend>doxygen</doc_depend> -->
   <buildtool_depend>catkin</buildtool_depend>
-
+  <build_depend>geometry_msgs</build_depend>
+  <build_depend>mc_slam_project_msgs</build_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>pcl_ros</build_depend>
+  <build_depend>tf</build_depend>
+  <build_depend>tf2</build_depend>
+  <build_export_depend>geometry_msgs</build_export_depend>
+  <build_export_depend>mc_slam_project_msgs</build_export_depend>
+  <build_export_depend>roscpp</build_export_depend>
+  <build_export_depend>std_msgs</build_export_depend>
+  <build_export_depend>pcl_ros</build_export_depend>
+  <build_export_depend>tf</build_export_depend>
+  <build_export_depend>tf2</build_export_depend>
+  <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>mc_slam_project_msgs</exec_depend>
+  <exec_depend>roscpp</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+  <exec_depend>pcl_ros</exec_depend>
+  <exec_depend>tf</exec_depend>
+  <exec_depend>tf2</exec_depend>
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>
