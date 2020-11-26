@@ -10,7 +10,7 @@ int main(int argc, char **argv)
   double frequency;
   nh_private.param("frequency_max", frequency, 20.0);
 
-  goICP_ros_namespace::GoICP_ros goICP_ros_;
+  goICP_ros_namespace::goICP_ros goICP_ros_;
 
   // Main loop
   ros::Rate rate(frequency);

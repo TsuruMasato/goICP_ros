@@ -28,6 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <iostream>
 #include <fstream>
 using namespace std;
+using namespace goICP_ros_namespace;
 
 #include "jly_goicp.h"
 #include "ConfigMap.hpp"
@@ -41,7 +42,7 @@ void parseInput(int argc, char **argv, string &modelFName, string &dataFName, in
 void readConfig(string FName, GoICP &goicp);
 int loadPointCloud(string FName, int &N, POINT3D **p);
 
-int original_main(int argc, char **argv)
+bool goICP_ros::original_main(int argc, char **argv)
 {
   int Nm, Nd, NdDownsampled;
   clock_t clockBegin, clockEnd;
@@ -94,8 +95,7 @@ int original_main(int argc, char **argv)
 
   delete (pModel);
   delete (pData);
-
-  return 0;
+  return true;
 }
 
 void parseInput(int argc, char **argv, string &modelFName, string &dataFName, int &NdDownsampled, string &configFName, string &outputFName)

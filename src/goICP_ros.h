@@ -3,7 +3,7 @@
 namespace goICP_ros_namespace
 {
 
-class GoICP_ros : GoICP
+class goICP_ros : GoICP
 {
 public:
 	int Nm, Nd;
@@ -17,10 +17,11 @@ public:
 	ROTNODE optNodeRot;
 	TRANSNODE optNodeTrans;
 
-	GoICP_ros(){};
-  ~GoICP_ros(){};
+	goICP_ros(){};
+  ~goICP_ros(){};
 
   bool run(){};
+  bool original_main(int argc, char **argv);
 
   float Register();
 	void BuildDT();
