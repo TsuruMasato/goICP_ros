@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(goICP-ros)
+project(goICP_ros)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
@@ -149,7 +149,7 @@ set(SRC_GO_ICP
     Go-ICP/StringTokenizer.cpp
 )
 
-add_executable(goICP-ros src/node.cpp ${SRC_GO_ICP})
+add_executable(goICP_ros src/node.cpp src/goICP_ros.cpp ${SRC_GO_ICP})
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -162,7 +162,7 @@ add_executable(goICP-ros src/node.cpp ${SRC_GO_ICP})
 # add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
-target_link_libraries(goICP-ros
+target_link_libraries(goICP_ros
   ${catkin_LIBRARIES}
 )
 
