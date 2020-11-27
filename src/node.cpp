@@ -11,7 +11,7 @@ int main(int argc, char **argv)
   nh_private.param("frequency_max", frequency, 20.0);
 
   goICP_ros_namespace::goICP_ros goICP_ros_(nh_private);
-  goICP_ros_.setConfig();
+  goICP_ros_.set_object_cloud();  //TODO: update Nm referencing to the input.
 
   // Main loop
   ros::Rate rate(frequency);

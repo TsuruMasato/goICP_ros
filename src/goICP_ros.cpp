@@ -46,6 +46,7 @@ goICP_ros::goICP_ros(ros::NodeHandle &nh)
              : nh_ptr_(std::make_shared<ros::NodeHandle>(nh))
 {
   setConfig();
+  ros::Subscriber sub_camera = nh_ptr_->subscribe<sensor_msgs::PointCloud2>("/online_object_detector/camera_cloud", 1, &goICP_ros::callback_camera, this);
 }
 
 void goICP_ros::setConfig()
@@ -89,54 +90,46 @@ bool goICP_ros::original_main(int argc, char **argv)
   int Nm, Nd, NdDownsampled;
   clock_t clockBegin, clockEnd;
   string modelFName, dataFName, configFName, outputFname;
-  POINT3D *pModel, *pData;
-  GoICP goicp;
-
-  parseInput(argc, argv, modelFName, dataFName, NdDownsampled, configFName, outputFname);
-  readConfig(configFName, goicp);
+  outputFname = string("output_tsuru.txt");
 
   // Load model and data point clouds
-  loadPointCloud(modelFName, Nm, &pModel);
-  loadPointCloud(dataFName, Nd, &pData);
-
-  goicp.pModel = pModel;
-  goicp.Nm = Nm;
-  goicp.pData = pData;
-  goicp.Nd = Nd;
+  //loadPointCloud(modelFName, Nm, &pModel);
+  
+  //loadPointCloud(dataFName, Nd, &pData);
+  set_camera_cloud(input_camera_cloud_);  //update Nd in this func.
 
   // Build Distance Transform
   cout << "Building Distance Transform..." << flush;
   clockBegin = clock();
-  goicp.BuildDT();
+  BuildDT();
   clockEnd = clock();
   cout << (double)(clockEnd - clockBegin) / CLOCKS_PER_SEC << "s (CPU)" << endl;
 
   // Run GO-ICP
   if (NdDownsampled > 0)
   {
-    goicp.Nd = NdDownsampled; // Only use first NdDownsampled data points (assumes data points are randomly ordered)
+    Nd = NdDownsampled; // Only use first NdDownsampled data points (assumes data points are randomly ordered)
   }
-  cout << "Model ID: " << modelFName << " (" << goicp.Nm << "), Data ID: " << dataFName << " (" << goicp.Nd << ")" << endl;
-  cout << "Registering..." << endl;
+
   clockBegin = clock();
-  goicp.Register();
+  Register();
   clockEnd = clock();
   double time = (double)(clockEnd - clockBegin) / CLOCKS_PER_SEC;
   cout << "Optimal Rotation Matrix:" << endl;
-  cout << goicp.optR << endl;
+  cout << optR << endl;
   cout << "Optimal Translation Vector:" << endl;
-  cout << goicp.optT << endl;
+  cout << optT << endl;
   cout << "Finished in " << time << endl;
 
   ofstream ofile;
   ofile.open(outputFname.c_str(), ofstream::out);
   ofile << time << endl;
-  ofile << goicp.optR << endl;
-  ofile << goicp.optT << endl;
+  ofile << optR << endl;
+  ofile << optT << endl;
   ofile.close();
 
-  delete (pModel);
-  delete (pData);
+  //delete (pModel);  //TODO: reset the cloud data in update function.
+  //delete (pData);
   return true;
 }
 
