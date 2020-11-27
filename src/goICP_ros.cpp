@@ -97,7 +97,7 @@ void goICP_ros::setConfig()
   ROS_INFO("doTrim : %d", doTrim);
 }
 
-bool goICP_ros::original_main(int argc, char **argv)
+bool goICP_ros::run()
 {
   // check if it receives both data.
   if(!is_camera_new_ || !is_object_new_)

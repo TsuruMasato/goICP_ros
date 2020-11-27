@@ -22,8 +22,7 @@ public:
 
   void setConfig();
 
-  bool run(){};
-  bool original_main(int argc, char **argv);
+  bool run();
   void set_camera_cloud(sensor_msgs::PointCloud2 &input_msg);
   void set_object_cloud(sensor_msgs::PointCloud2 &input_msg);
   void callback_camera(const sensor_msgs::PointCloud2ConstPtr &input);
