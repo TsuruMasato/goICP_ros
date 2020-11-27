@@ -42,6 +42,48 @@ void parseInput(int argc, char **argv, string &modelFName, string &dataFName, in
 void readConfig(string FName, GoICP &goicp);
 int loadPointCloud(string FName, int &N, POINT3D **p);
 
+goICP_ros::goICP_ros(ros::NodeHandle &nh)
+             : nh_ptr_(std::make_shared<ros::NodeHandle>(nh))
+{
+  setConfig();
+}
+
+void goICP_ros::setConfig()
+{
+  nh_ptr_->param("MSEThresh", MSEThresh, 0.001f);
+  nh_ptr_->param("rotMinX", initNodeRot.a, -3.1416f);
+  nh_ptr_->param("rotMinY", initNodeRot.b, -3.1416f);
+  nh_ptr_->param("rotMinZ", initNodeRot.c, -3.1416f);
+  nh_ptr_->param("rotWidth", initNodeRot.w, 6.2832f);
+  nh_ptr_->param("transMinX", initNodeTrans.x, -0.5f);
+  nh_ptr_->param("transMinY", initNodeTrans.y, -0.5f);
+  nh_ptr_->param("transMinZ", initNodeTrans.z, -0.5f);
+  nh_ptr_->param("transWidth", initNodeTrans.w, 1.0f);
+  nh_ptr_->param("trimFraction", trimFraction, 0.0f);
+  nh_ptr_->param("distTransSize", dt.SIZE, 300);
+  nh_ptr_->param("distTransExpandFactor", dt.expandFactor, 2.0);
+  // If < 0.1% trimming specified, do no trimming
+  if (trimFraction < 0.001)
+  {
+    doTrim = false;
+  }
+
+  ROS_INFO("config:");
+  ROS_INFO("MSEThresh : %f", MSEThresh);
+  ROS_INFO("rotMinX : %f", initNodeRot.a);
+  ROS_INFO("rotMinY : %f", initNodeRot.b);
+  ROS_INFO("rotMinZ : %f", initNodeRot.c);
+  ROS_INFO("rotWidth : %f", initNodeRot.w);
+  ROS_INFO("transMinX : %f", initNodeTrans.x);
+  ROS_INFO("transMinY : %f", initNodeTrans.y);
+  ROS_INFO("transMinZ : %f", initNodeTrans.z);
+  ROS_INFO("transWidth : %f", initNodeTrans.w);
+  ROS_INFO("trimFraction : %f", trimFraction);
+  ROS_INFO("distTransSize : %d", dt.SIZE);
+  ROS_INFO("distTransExpandFactor : %f", dt.expandFactor);
+  ROS_INFO("doTrim : %d", doTrim);
+}
+
 bool goICP_ros::original_main(int argc, char **argv)
 {
   int Nm, Nd, NdDownsampled;

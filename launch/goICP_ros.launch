@@ -1,0 +1,18 @@
+<launch>
+  <node name="goICP_ros" pkg="goICP_ros" type="goICP_ros" output="screen">
+      <param name="frequency" type="double" value="20" />
+      <param name="model" type="string" value="grabo.pcd" />
+      <param name="MSEThresh" type="double" value="0.001" />  <!-- Mean Squared Error (MSE) convergence threshold -->
+      <param name="rotMinX" type="double" value="-3.1416" />  <!-- Smallest rotation value along dimension X of rotation cube (radians) -->
+      <param name="rotMinY" type="double" value="-3.1416" />  <!-- Smallest rotation value along dimension Y of rotation cube (radians) -->
+      <param name="rotMinZ" type="double" value="-3.1416" />  <!-- Smallest rotation value along dimension Z of rotation cube (radians) -->
+      <param name="rotWidth" type="double" value="6.2832" />  <!-- Side length of each dimension of rotation cube (radians) -->
+      <param name="transMinX" type="double" value="-0.5" />   <!-- Smallest translation value along dimension X of translation cube -->
+      <param name="transMinY" type="double" value="-0.5" />  <!-- Smallest translation value along dimension Y of translation cube -->
+      <param name="transMinZ" type="double" value="-0.5" />  <!-- Smallest translation value along dimension Z of translation cube -->
+      <param name="transWidth" type="double" value="1.0" />  <!-- Side length of each dimension of translation cube -->
+      <param name="trimFraction" type="double" value="0.0" />  <!-- Set to 0.0 for no trimming -->
+      <param name="distTransSize" type="int" value="300" />  <!-- Nodes per dimension of distance transform -->
+      <param name="distTransExpandFactor" type="double" value="2.0" />  <!-- DistanceTransformWidth = ExpandFactor x WidthLargestDimension -->
+  </node>
+</launch>
