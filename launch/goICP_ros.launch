@@ -2,7 +2,7 @@
   <node name="goICP_ros" pkg="goICP_ros" type="goICP_ros" output="screen">
       <param name="frequency" type="double" value="20" />
       <param name="model" type="string" value="grabo.pcd" />
-      <param name="MSEThresh" type="double" value="0.001" />  <!-- Mean Squared Error (MSE) convergence threshold -->
+      <param name="MSEThresh" type="double" value="0.25" />  <!-- Mean Squared Error (MSE) convergence threshold -->
       <param name="rotMinX" type="double" value="-3.1416" />  <!-- Smallest rotation value along dimension X of rotation cube (radians) -->
       <param name="rotMinY" type="double" value="-3.1416" />  <!-- Smallest rotation value along dimension Y of rotation cube (radians) -->
       <param name="rotMinZ" type="double" value="-3.1416" />  <!-- Smallest rotation value along dimension Z of rotation cube (radians) -->

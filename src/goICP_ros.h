@@ -40,5 +40,7 @@ private:
   std::mutex mutex_camera_cloud_;
   sensor_msgs::PointCloud2 latest_object_cloud_;
   sensor_msgs::PointCloud2 latest_camera_cloud_;
+  ros::Subscriber sub_camera_;
+  ros::Subscriber sub_object_;
 };
 }

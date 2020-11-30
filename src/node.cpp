@@ -8,7 +8,7 @@ int main(int argc, char **argv)
 
   // Get params
   double frequency;
-  nh_private.param("frequency_max", frequency, 20.0);
+  nh_private.param("frequency_max", frequency, 2.0);
 
   goICP_ros_namespace::goICP_ros goICP_ros_(nh_private);
   //goICP_ros_.set_object_cloud();  //TODO: update Nm referencing to the input.

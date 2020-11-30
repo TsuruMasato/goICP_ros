@@ -42,13 +42,15 @@ using namespace goICP_ros_namespace;
 goICP_ros::goICP_ros(ros::NodeHandle &nh)
              : nh_ptr_(std::make_shared<ros::NodeHandle>(nh))
 {
+  ROS_INFO("start constructer");
   setConfig();
-  ros::Subscriber sub_camera = nh_ptr_->subscribe<sensor_msgs::PointCloud2>("/online_object_detector/camera_cloud", 1, &goICP_ros::callback_camera, this);
-  ros::Subscriber sub_object = nh_ptr_->subscribe<sensor_msgs::PointCloud2>("/online_object_detector/object_cloud", 1, &goICP_ros::callback_object, this);
+  sub_camera_ = nh_ptr_->subscribe<sensor_msgs::PointCloud2>("/online_object_detector/camera_cloud", 1, &goICP_ros::callback_camera, this);
+  sub_object_ = nh_ptr_->subscribe<sensor_msgs::PointCloud2>("/online_object_detector/object_cloud", 1, &goICP_ros::callback_object, this);
 }
 
 void goICP_ros::callback_camera(const sensor_msgs::PointCloud2ConstPtr &input)
 {
+  ROS_INFO("start callback camera");
   std::lock_guard<std::mutex> lock(mutex_camera_cloud_);
   latest_camera_cloud_ = *input;
   is_camera_new_ = true;
@@ -56,6 +58,7 @@ void goICP_ros::callback_camera(const sensor_msgs::PointCloud2ConstPtr &input)
 
 void goICP_ros::callback_object(const sensor_msgs::PointCloud2ConstPtr &input)
 {
+  ROS_INFO("start callback object");
   std::lock_guard<std::mutex> lock(mutex_object_cloud_);
   latest_object_cloud_ = *input;
   is_object_new_ = true;
@@ -110,6 +113,17 @@ bool goICP_ros::run()
   set_camera_cloud(latest_camera_cloud_);  //update Nd in this func.
   set_object_cloud(latest_object_cloud_);  //update Nm in this func.
 
+  // Run GO-ICP
+  uint NdDownsampled = 2000, NmDownsampled = 1000;
+  if (NdDownsampled > 0)
+  {
+    Nd = NdDownsampled; // Only use first NdDownsampled data points (assumes data points are randomly ordered)
+  }
+  if (NmDownsampled > 0)
+  {
+    Nm = NmDownsampled; // Only use first NdDownsampled data points (assumes data points are randomly ordered)
+  }
+
   // Build Distance Transform
   cout << "Building Distance Transform..." << flush;
   clockBegin_ = clock();
@@ -117,11 +131,6 @@ bool goICP_ros::run()
   clockEnd_ = clock();
   ROS_INFO("BuildDT took %f s (CPU)", (double)(clockEnd_ - clockBegin_) / CLOCKS_PER_SEC);
 
-  // Run GO-ICP
-  //if (NdDownsampled > 0)
-  //{
-  //  Nd = NdDownsampled; // Only use first NdDownsampled data points (assumes data points are randomly ordered)
-  //}
 
   clockBegin_ = clock();
   Register();
