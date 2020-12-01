@@ -115,11 +115,11 @@ bool goICP_ros::run()
 
   // Run GO-ICP
   uint NdDownsampled = 2000, NmDownsampled = 1000;
-  if (NdDownsampled > 0)
+  if (NdDownsampled > 0 && Nd > NdDownsampled)
   {
     Nd = NdDownsampled; // Only use first NdDownsampled data points (assumes data points are randomly ordered)
   }
-  if (NmDownsampled > 0)
+  if (NmDownsampled > 0 && Nm > NmDownsampled)
   {
     Nm = NmDownsampled; // Only use first NdDownsampled data points (assumes data points are randomly ordered)
   }
